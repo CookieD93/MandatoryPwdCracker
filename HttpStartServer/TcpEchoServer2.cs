@@ -21,10 +21,13 @@ namespace HttpStartServer
 {
     public class TCPEchoServer2
     {
+        public static int latestClient;
         public static void Main(string[] args)
         {
+            latestClient = 0;
             IPAddress ip = IPAddress.Parse("127.0.0.1");
             TcpListener serverSocket = new TcpListener(ip, 6789);
+            
 
             //TcpListener serverSocket = new TcpListener(6789);
             serverSocket.Start();
@@ -33,9 +36,9 @@ namespace HttpStartServer
                 while (true)
                 {
                     TcpClient connectionSocket = serverSocket.AcceptTcpClient();
-                    Console.WriteLine("Server activated now");
                     //EchoService service = new EchoService(connectionSocket)
                     EchoService service = new EchoService(ref connectionSocket, ref serverSocket);
+                    Console.WriteLine("Client number {0} connected",latestClient);
 
                     //Task.Factory.StartNew(service.DoIt);
                     // or use delegates 

@@ -28,27 +28,33 @@ namespace HttpStartClient
             Cracking crack = new Cracking();
             //Console.ReadLine();
             TcpClient clientSocket = new TcpClient("127.0.0.1", 6789);
-            Console.WriteLine("Client ready");
 
             Stream ns = clientSocket.GetStream(); //provides a Stream
             StreamReader sr = new StreamReader(ns);
             StreamWriter sw = new StreamWriter(ns);
             sw.AutoFlush = true; // enable automatic flushing
 
-            string message = Console.ReadLine();
-            sw.WriteLine(message);
+            //string message = Console.ReadLine();
+            //sw.WriteLine(message);
+            Console.WriteLine("Client ready");
             string serverAnswer = sr.ReadLine();
-            string trigger = "on";
-            while (trigger != $"off")
+            string[] splitAnswer = serverAnswer.Split('.');
+            sw.WriteLine("Received command "+splitAnswer[0]);
+            while (splitAnswer[0].ToLower() != "off")
             {
-                message = Console.ReadLine();
-                sw.WriteLine(message);
+            //    message = Console.ReadLine();
+            //    sw.WriteLine(message);
                 Console.WriteLine("Server: " + serverAnswer);
-                serverAnswer = sr.ReadLine();
-                if (message =="off")
+                if (serverAnswer.ToLower().Contains("crack"))
                 {
-                    trigger = "off";
+                    string result = crack.RunCracking(Int32.Parse(splitAnswer[1]), sw);
+                    sw.WriteLine(result);
                 }
+                serverAnswer = sr.ReadLine();
+                //if (message =="off")
+                //{
+                //    trigger = "off";
+                //}
             }
             Console.WriteLine("No more from server. Press Enter");
             Console.ReadLine();

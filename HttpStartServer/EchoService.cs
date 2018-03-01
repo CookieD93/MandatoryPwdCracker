@@ -24,6 +24,7 @@ namespace HttpStartServer
         Stream ns;
         StreamReader sr;   
         StreamWriter sw;
+        private int clientNumber;
 
         private TcpClient connectionSocket;
         private TcpListener serverSocket;
@@ -34,6 +35,8 @@ namespace HttpStartServer
         {
             // TODO: Complete member initialization
             this.connectionSocket = connectionSocket;
+            TCPEchoServer2.latestClient++;
+            clientNumber = TCPEchoServer2.latestClient;
         }
 
         public EchoService(ref TcpClient connectionSocket, ref TcpListener serverSocket)
@@ -41,6 +44,8 @@ namespace HttpStartServer
             // TODO: Complete member initialization
             this.connectionSocket = connectionSocket;
             this.serverSocket = serverSocket;
+            TCPEchoServer2.latestClient++;
+            clientNumber = TCPEchoServer2.latestClient;
         }
         internal void DoIt()
         {
@@ -49,77 +54,81 @@ namespace HttpStartServer
             // StreamWriter sw = new StreamWriter(ns);
             sw = new StreamWriter(new BufferedStream(ns));
             sw.AutoFlush = true; // enable automatic flushing
-
-            string message = sr.ReadLine();
             string answer, first;
-            while (message != null && message != "")
+            string message = "First";
+            Console.WriteLine("Client{0} " + message,clientNumber);
+            while (!string.IsNullOrEmpty(message))
             {
-                Console.WriteLine("Client: " + message);
-                string[] list = message.Split(' '); //GET index.htm http/1.1
-                first = list[0].ToUpper();
-                if (first.Equals("STOP"))
-                {
-                    Console.WriteLine("Wants to stop");
-                    ns.Close();
-                    connectionSocket.Close();
-                    while (serverSocket.Pending())
-                        Thread.Sleep(100);
-                    Console.WriteLine("Shutdown says; Server is stopped");
+                answer = Console.ReadLine();
+                sw.WriteLine(answer);
+                #region udkommenteret
+                //Console.WriteLine("Client{0}: " + message,clientNumber);
+                //string[] list = message.Split(' '); //GET index.htm http/1.1
+                //first = list[0].ToUpper();
+                //if (first.Equals("STOP"))
+                //{
+                //    Console.WriteLine("Client{0} Wants to stop",clientNumber);
+                //    ns.Close();
+                //    connectionSocket.Close();
+                //    while (serverSocket.Pending())
+                //        Thread.Sleep(100);
+                //    Console.WriteLine("Connection with Client{0} terminated",clientNumber);
 
-                    serverSocket.Stop();
-                    break;
-                }
+                //    serverSocket.Stop();
+                //    break;
+                //}
 
-                if (first.Equals("GET") && list.Length == 3)
-                {
-                    string fileName = list[1];
-                    string protocol = list[2];
+                //if (first.Equals("GET") && list.Length == 3)
+                //{
+                //    string fileName = list[1];
+                //    string protocol = list[2];
 
-                    //Ass. 2
+                //    //Ass. 2
 
-                    //sw.WriteLine("Requested file: " + fileName);
+                //    //sw.WriteLine("Requested file: " + fileName);
 
-                    //Ass. 3
-                    sw.Write("HTTP/1.1 200 OK\r\n");
-                    sw.Write("Content-Type: image/jpg\r\n");
-                    sw.Write("Connection: close\r\n");
-                    sw.Write("\r\n"); //To Browser, marks end of header and data are coming
-                 // sw.Write("Hello client\r\n"); //Not to browser
-                  // sw.Write("Requested file: " + fileName + "\r\n"); //Not to browser
-                    
-                    //Ass. 5                 
-                    uri = uri + fileName;
-                    // Read as bytes calling this method:
-                    //ReadAndDisplayFilesAsync(uri, sw);
-                    //OR JUST
+                //    //Ass. 3
+                //    sw.Write("HTTP/1.1 200 OK\r\n");
+                //    sw.Write("Content-Type: image/jpg\r\n");
+                //    sw.Write("Connection: close\r\n");
+                //    sw.Write("\r\n"); //To Browser, marks end of header and data are coming
+                // // sw.Write("Hello client\r\n"); //Not to browser
+                //  // sw.Write("Requested file: " + fileName + "\r\n"); //Not to browser
 
-                    fileStream = new FileStream(uri, FileMode.Open, FileAccess.Read);
-                    fileStream.CopyTo(sw.BaseStream);
-                  
-                    // OR do as below:
+                //    //Ass. 5                 
+                //    uri = uri + fileName;
+                //    // Read as bytes calling this method:
+                //    //ReadAndDisplayFilesAsync(uri, sw);
+                //    //OR JUST
 
-                   
-                    //StreamReader fileReader = new StreamReader(fileStream);
-                    
-                    //while (!fileReader.EndOfStream)
-                    //{
-                    //    string s = fileReader.ReadLine();
-                    //    Console.WriteLine(s);
-                    //    sw.Write(s + "\r\n");
-                    //}
-                    //sw.Write("\r\n");
-                    sw.Flush();
-                    sw.BaseStream.Flush();
-                    sw.Close();
+                //    fileStream = new FileStream(uri, FileMode.Open, FileAccess.Read);
+                //    fileStream.CopyTo(sw.BaseStream);
 
-                }
-                else
-                {
-                    answer = message.ToUpper();
-                    sw.WriteLine(answer);
-                }
-                // sw.Flush();
+                //    // OR do as below:
+
+
+                //    //StreamReader fileReader = new StreamReader(fileStream);
+
+                //    //while (!fileReader.EndOfStream)
+                //    //{
+                //    //    string s = fileReader.ReadLine();
+                //    //    Console.WriteLine(s);
+                //    //    sw.Write(s + "\r\n");
+                //    //}
+                //    //sw.Write("\r\n");
+                //    sw.Flush();
+                //    sw.BaseStream.Flush();
+                //    sw.Close();
+
+                //}
+                //else
+                //{
+                //    answer = Console.ReadLine();
+                //    sw.WriteLine(answer);
+                //} 
+                #endregion
                 message = sr.ReadLine();
+                Console.WriteLine(message);
 
             }
             //ns.Close();

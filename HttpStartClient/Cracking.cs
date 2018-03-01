@@ -24,7 +24,7 @@ namespace HttpStartClient
         /// <summary>
         /// Runs the password cracking algorithm
         /// </summary>
-        public void RunCracking(int start)
+        public string RunCracking(int start, StreamWriter sw)
         {
             Stopwatch stopwatch = Stopwatch.StartNew();
 
@@ -48,6 +48,10 @@ namespace HttpStartClient
             Console.WriteLine("Out of {0} password {1} was found ", userInfos.Count, result.Count);
             Console.WriteLine();
             Console.WriteLine("Time elapsed: {0}", stopwatch.Elapsed);
+            string s1 = string.Join(", ", result);
+            string responseString = "";
+            responseString = s1+ "r/n/Out of "+ userInfos.Count+ " password "+result.Count+" was found"+"/r/nTime elapsed "+stopwatch.Elapsed;
+            return responseString;
         }
 
         /// <summary>
