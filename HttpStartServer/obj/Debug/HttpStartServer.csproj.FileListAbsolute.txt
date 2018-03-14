@@ -5,3 +5,10 @@ C:\Users\Niklas\Source\Repos\MandatoryPwdCracker\HttpStartServer\obj\Debug\HttpS
 C:\Users\Niklas\Source\Repos\MandatoryPwdCracker\HttpStartServer\obj\Debug\HttpStartServer.csproj.CoreCompileInputs.cache
 C:\Users\Niklas\Source\Repos\MandatoryPwdCracker\HttpStartServer\obj\Debug\HttpStartServer.exe
 C:\Users\Niklas\Source\Repos\MandatoryPwdCracker\HttpStartServer\obj\Debug\HttpStartServer.pdb
+D:\skole\Source\Repos\MandatoryPwdCracker\HttpStartServer\bin\Debug\HttpStartServer.exe.config
+D:\skole\Source\Repos\MandatoryPwdCracker\HttpStartServer\bin\Debug\HttpStartServer.exe
+D:\skole\Source\Repos\MandatoryPwdCracker\HttpStartServer\bin\Debug\HttpStartServer.pdb
+D:\skole\Source\Repos\MandatoryPwdCracker\HttpStartServer\obj\Debug\HttpStartServer.csprojResolveAssemblyReference.cache
+D:\skole\Source\Repos\MandatoryPwdCracker\HttpStartServer\obj\Debug\HttpStartServer.csproj.CoreCompileInputs.cache
+D:\skole\Source\Repos\MandatoryPwdCracker\HttpStartServer\obj\Debug\HttpStartServer.exe
+D:\skole\Source\Repos\MandatoryPwdCracker\HttpStartServer\obj\Debug\HttpStartServer.pdb

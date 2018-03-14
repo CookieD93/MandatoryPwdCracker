@@ -28,9 +28,7 @@ namespace HttpStartClient
         {
             Stopwatch stopwatch = Stopwatch.StartNew();
 
-            List<UserInfo> userInfos =
-                PasswordFileHandler.ReadPasswordFile("passwords.txt");
-            Console.WriteLine("passwd opeend");
+            List<UserInfo> userInfos = PasswordFileHandler.ReadPasswordFile("passwords.txt");
 
             List<UserInfoClearText> result = new List<UserInfoClearText>();
 
@@ -42,25 +40,17 @@ namespace HttpStartClient
                     String dictionaryEntry = TCPEchoClient.list[i];
                     IEnumerable<UserInfoClearText> partialResult = CheckWordWithVariations(dictionaryEntry, userInfos);
                     result.AddRange(partialResult);
-                    //Console.WriteLine(partialResult);
                 }
             }
             catch (Exception e)
             {
-
-                //Console.WriteLine(e);
                 variable = "off";
             }
-            
+
             stopwatch.Stop();
-            Console.WriteLine(string.Join(", ", result));
-            Console.WriteLine("Out of {0} password {1} was found ", userInfos.Count, result.Count);
-            Console.WriteLine();
             Console.WriteLine("Time elapsed: {0}", stopwatch.Elapsed);
             string s1 = string.Join("@", result);
-            string responseString = "ready";
-            responseString = s1+ "@time:@"+stopwatch.Elapsed+"@Index Number: "+start+"@"+variable;
-            return responseString;
+            return s1 + "@time:@" + stopwatch.Elapsed + "@Index Number: @" + start + "@" + variable;
         }
 
         /// <summary>

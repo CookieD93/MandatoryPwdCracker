@@ -1,14 +1,4 @@
-﻿/*
- * TcpEchoServer2.cs
- *
- * Author Michael Claudius, ZIBAT Computer Science
- * Version 1.0. 2014.02.10
- * Copyright 2014 by Michael Claudius
- * Revised 2014.09.15, 2016.02.22
- * All rights reserved
- */
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -33,8 +23,7 @@ namespace HttpStartServer
             TcpListener serverSocket = new TcpListener(ip, 6789);
             dictionaryIndexCounter = 0;
             pwList = new List<string>();
-
-            //TcpListener serverSocket = new TcpListener(6789);
+            
             serverSocket.Start();
             try
             {
@@ -42,14 +31,8 @@ namespace HttpStartServer
                 while (true)
                 {
                     TcpClient connectionSocket = serverSocket.AcceptTcpClient();
-                    //EchoService service = new EchoService(connectionSocket)
                     EchoService service = new EchoService(ref connectionSocket, ref serverSocket);
                     Console.WriteLine("Client number {0} connected",latestClient);
-                    //
-                    //
-                    //
-                    //Task.Factory.StartNew(service.DoIt);
-                    // or use delegates 
                     Task.Factory.StartNew(() => service.DoIt());
 
 
@@ -64,8 +47,6 @@ namespace HttpStartServer
                 
                 if (serverSocket != null) serverSocket.Stop();
             }
-
-            //serverSocket.Stop();
         }
 
     }
