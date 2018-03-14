@@ -37,13 +37,14 @@ namespace HttpStartClient
             //string message = Console.ReadLine();
             //sw.WriteLine(message);
             Console.WriteLine("Client ready");
+            sw.WriteLine("ready");
             string serverAnswer = sr.ReadLine();
-            string[] splitAnswer = serverAnswer.Split('.');
-            sw.WriteLine("Received command "+splitAnswer[0]);
-            while (splitAnswer[0].ToLower() != "off")
+            while (serverAnswer != "off")
             {
-            //    message = Console.ReadLine();
-            //    sw.WriteLine(message);
+                string[] splitAnswer = serverAnswer.Split('.');
+                //sw.WriteLine("Received command " + splitAnswer[0]);
+                //    message = Console.ReadLine();
+                //    sw.WriteLine(message);
                 Console.WriteLine("Server: " + serverAnswer);
                 if (serverAnswer.ToLower().Contains("crack"))
                 {
@@ -56,6 +57,12 @@ namespace HttpStartClient
                 //    trigger = "off";
                 //}
             }
+            //TODO 
+            //clients skal sende passwords til server
+            //server skal gemme passwords
+            //server skal vise passwords(eventuelt både når de bliver modtaget og når alle passwords er fundet / ordbog er "tom")
+            //exception håndtering på ordbog når den løber tør for ord
+
             Console.WriteLine("No more from server. Press Enter");
             Console.ReadLine();
 

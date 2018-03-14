@@ -28,6 +28,7 @@ namespace HttpStartServer
 
         private TcpClient connectionSocket;
         private TcpListener serverSocket;
+
         String uri = @"D:/Testfolder";
         FileStream fileStream;
 
@@ -57,80 +58,135 @@ namespace HttpStartServer
             string answer, first;
             string message = "First";
             Console.WriteLine("Client{0} " + message,clientNumber);
+            message = sr.ReadLine();
+           // responseString = s1+ "r/n/Out of "+ userInfos.Count+ " password "+result.Count+" was found"+"/r/nTime elapsed "+stopwatch.Elapsed+" ready";
+
             while (!string.IsNullOrEmpty(message))
             {
-                answer = Console.ReadLine();
-                sw.WriteLine(answer);
-                #region udkommenteret
-                //Console.WriteLine("Client{0}: " + message,clientNumber);
-                //string[] list = message.Split(' '); //GET index.htm http/1.1
-                //first = list[0].ToUpper();
-                //if (first.Equals("STOP"))
-                //{
-                //    Console.WriteLine("Client{0} Wants to stop",clientNumber);
-                //    ns.Close();
-                //    connectionSocket.Close();
-                //    while (serverSocket.Pending())
-                //        Thread.Sleep(100);
-                //    Console.WriteLine("Connection with Client{0} terminated",clientNumber);
-
-                //    serverSocket.Stop();
-                //    break;
-                //}
-
-                //if (first.Equals("GET") && list.Length == 3)
-                //{
-                //    string fileName = list[1];
-                //    string protocol = list[2];
-
-                //    //Ass. 2
-
-                //    //sw.WriteLine("Requested file: " + fileName);
-
-                //    //Ass. 3
-                //    sw.Write("HTTP/1.1 200 OK\r\n");
-                //    sw.Write("Content-Type: image/jpg\r\n");
-                //    sw.Write("Connection: close\r\n");
-                //    sw.Write("\r\n"); //To Browser, marks end of header and data are coming
-                // // sw.Write("Hello client\r\n"); //Not to browser
-                //  // sw.Write("Requested file: " + fileName + "\r\n"); //Not to browser
-
-                //    //Ass. 5                 
-                //    uri = uri + fileName;
-                //    // Read as bytes calling this method:
-                //    //ReadAndDisplayFilesAsync(uri, sw);
-                //    //OR JUST
-
-                //    fileStream = new FileStream(uri, FileMode.Open, FileAccess.Read);
-                //    fileStream.CopyTo(sw.BaseStream);
-
-                //    // OR do as below:
-
-
-                //    //StreamReader fileReader = new StreamReader(fileStream);
-
-                //    //while (!fileReader.EndOfStream)
-                //    //{
-                //    //    string s = fileReader.ReadLine();
-                //    //    Console.WriteLine(s);
-                //    //    sw.Write(s + "\r\n");
-                //    //}
-                //    //sw.Write("\r\n");
-                //    sw.Flush();
-                //    sw.BaseStream.Flush();
-                //    sw.Close();
-
-                //}
+            string[] splitMessage = message.Split('@');
+                int i = 0;
+                if (splitMessage.Last().ToLower() == "off" || !TCPEchoServer2.keepRunning)
+                {
+                    answer = "off";
+                    sw.WriteLine(answer);
+                    TCPEchoServer2.keepRunning = false;
+                }
                 //else
                 //{
-                //    answer = Console.ReadLine();
-                //    sw.WriteLine(answer);
-                //} 
-                #endregion
-                message = sr.ReadLine();
-                Console.WriteLine(message);
 
+
+                    if (splitMessage.Last().ToLower() == "ready")
+                    {
+                        int indexToStartAt = TCPEchoServer2.dictionaryIndexCounter * 5000;
+                        answer = "crack." + indexToStartAt;
+                        sw.WriteLine(answer);
+                        TCPEchoServer2.dictionaryIndexCounter++;
+                    }
+                    //answer = Console.ReadLine();
+                    //sw.WriteLine(answer);
+
+                    #region udkommenteret
+
+                    //Console.WriteLine("Client{0}: " + message,clientNumber);
+                    //string[] list = message.Split(' '); //GET index.htm http/1.1
+                    //first = list[0].ToUpper();
+                    //if (first.Equals("STOP"))
+                    //{
+                    //    Console.WriteLine("Client{0} Wants to stop",clientNumber);
+                    //    ns.Close();
+                    //    connectionSocket.Close();
+                    //    while (serverSocket.Pending())
+                    //        Thread.Sleep(100);
+                    //    Console.WriteLine("Connection with Client{0} terminated",clientNumber);
+
+                    //    serverSocket.Stop();
+                    //    break;
+                    //}
+
+                    //if (first.Equals("GET") && list.Length == 3)
+                    //{
+                    //    string fileName = list[1];
+                    //    string protocol = list[2];
+
+                    //    //Ass. 2
+
+                    //    //sw.WriteLine("Requested file: " + fileName);
+
+                    //    //Ass. 3
+                    //    sw.Write("HTTP/1.1 200 OK\r\n");
+                    //    sw.Write("Content-Type: image/jpg\r\n");
+                    //    sw.Write("Connection: close\r\n");
+                    //    sw.Write("\r\n"); //To Browser, marks end of header and data are coming
+                    // // sw.Write("Hello client\r\n"); //Not to browser
+                    //  // sw.Write("Requested file: " + fileName + "\r\n"); //Not to browser
+
+                    //    //Ass. 5                 
+                    //    uri = uri + fileName;
+                    //    // Read as bytes calling this method:
+                    //    //ReadAndDisplayFilesAsync(uri, sw);
+                    //    //OR JUST
+
+                    //    fileStream = new FileStream(uri, FileMode.Open, FileAccess.Read);
+                    //    fileStream.CopyTo(sw.BaseStream);
+
+                    //    // OR do as below:
+
+
+                    //    //StreamReader fileReader = new StreamReader(fileStream);
+
+                    //    //while (!fileReader.EndOfStream)
+                    //    //{
+                    //    //    string s = fileReader.ReadLine();
+                    //    //    Console.WriteLine(s);
+                    //    //    sw.Write(s + "\r\n");
+                    //    //}
+                    //    //sw.Write("\r\n");
+                    //    sw.Flush();
+                    //    sw.BaseStream.Flush();
+                    //    sw.Close();
+
+                    //}
+                    //else
+                    //{
+                    //    answer = Console.ReadLine();
+                    //    sw.WriteLine(answer);
+                    //} 
+
+                    #endregion
+
+                    //message = sr.ReadLine();
+
+
+                    // Console.WriteLine("besked: "+message);
+                    foreach (var s in splitMessage)
+                    {
+                        Console.WriteLine(s);
+                    }
+                    foreach (var s in splitMessage)
+                    {
+                        if (s == "time:" || s == "" || s == "ready")
+                        {
+                            break;
+                        }
+                        TCPEchoServer2.pwList.Add(s);
+                    }
+                    Console.WriteLine("printer pw liste:");
+                    foreach (var o in TCPEchoServer2.pwList)
+                    {
+                        Console.WriteLine("+++++" + o);
+
+                    }
+                    //if (splitMessage[i] != "time:" || splitMessage[i] != "ready")
+                    //{
+
+                    //    TCPEchoServer2.pwList.Add(splitMessage[i]);
+                    //    i++;
+                    //}
+
+                    message = sr.ReadLine();
+                //}
             }
+            
             //ns.Close();
             //connectionSocket.Close();
         }

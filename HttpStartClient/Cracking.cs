@@ -34,23 +34,32 @@ namespace HttpStartClient
 
             List<UserInfoClearText> result = new List<UserInfoClearText>();
 
-
-            for (int i = start; i < start+5000; i++)
+            string variable = "ready";
+            try
             {
-                
+                for (int i = start; i < start + 5000; i++)
+                {
                     String dictionaryEntry = TCPEchoClient.list[i];
                     IEnumerable<UserInfoClearText> partialResult = CheckWordWithVariations(dictionaryEntry, userInfos);
                     result.AddRange(partialResult);
+                    //Console.WriteLine(partialResult);
                 }
+            }
+            catch (Exception e)
+            {
+
+                //Console.WriteLine(e);
+                variable = "off";
+            }
             
             stopwatch.Stop();
             Console.WriteLine(string.Join(", ", result));
             Console.WriteLine("Out of {0} password {1} was found ", userInfos.Count, result.Count);
             Console.WriteLine();
             Console.WriteLine("Time elapsed: {0}", stopwatch.Elapsed);
-            string s1 = string.Join(", ", result);
-            string responseString = "";
-            responseString = s1+ "r/n/Out of "+ userInfos.Count+ " password "+result.Count+" was found"+"/r/nTime elapsed "+stopwatch.Elapsed;
+            string s1 = string.Join("@", result);
+            string responseString = "ready";
+            responseString = s1+ "@time:@"+stopwatch.Elapsed+"@Index Number: "+start+"@"+variable;
             return responseString;
         }
 
